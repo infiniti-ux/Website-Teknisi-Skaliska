@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDw8AhXns--g4t_vKwI4QAHzw-pvu3OZjY",
   authDomain: "teknisi-skaliska.firebaseapp.com",
   projectId: "teknisi-skaliska",
-  storageBucket: "teknisi-skaliska.firebasestorage.app",
+  storageBucket: "teknisi-skaliska.appspot.com",   // ✅ SUDAH BENAR
   messagingSenderId: "736577586416",
   appId: "1:736577586416:web:cb8017132e829d92226e35"
 };
@@ -968,16 +968,28 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// ---------- REAL‑TIME LISTENERS ----------
+// ---------- REAL‑TIME LISTENERS (dengan retry terkendali) ----------
+let gudangRetryCount = 0;
+let riwayatRetryCount = 0;
+let gudangToastShown = false;
+let riwayatToastShown = false;
+
 function startGudangListener() {
   return onSnapshot(collection(db, 'gudang'), snapshot => {
     gudangData = [];
     snapshot.forEach(doc => gudangData.push({ id: doc.id, ...doc.data() }));
     renderGudangList();
+    gudangRetryCount = 0;
+    gudangToastShown = false;
   }, error => {
     console.error('Gudang listener error:', error);
-    showToast('Gagal sinkronisasi data barang.', 'error');
-    setTimeout(startGudangListener, 5000);
+    if (!gudangToastShown) {
+      showToast('Gagal sinkronisasi data barang. Periksa koneksi & aturan Firebase.', 'error');
+      gudangToastShown = true;
+    }
+    const delay = Math.min(5000 * Math.pow(2, gudangRetryCount), 30000);
+    gudangRetryCount++;
+    setTimeout(startGudangListener, delay);
   });
 }
 
@@ -986,10 +998,17 @@ function startRiwayatListener() {
     riwayatData = [];
     snapshot.forEach(doc => riwayatData.push({ id: doc.id, ...doc.data() }));
     renderRiwayatList();
+    riwayatRetryCount = 0;
+    riwayatToastShown = false;
   }, error => {
     console.error('Riwayat listener error:', error);
-    showToast('Gagal sinkronisasi riwayat.', 'error');
-    setTimeout(startRiwayatListener, 5000);
+    if (!riwayatToastShown) {
+      showToast('Gagal sinkronisasi riwayat. Periksa aturan Firestore.', 'error');
+      riwayatToastShown = true;
+    }
+    const delay = Math.min(5000 * Math.pow(2, riwayatRetryCount), 30000);
+    riwayatRetryCount++;
+    setTimeout(startRiwayatListener, delay);
   });
 }
 
