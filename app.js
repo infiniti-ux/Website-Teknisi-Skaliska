@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDw8AhXns--g4t_vKwI4QAHzw-pvu3OZjY",
   authDomain: "teknisi-skaliska.firebaseapp.com",
   projectId: "teknisi-skaliska",
-  storageBucket: "teknisi-skaliska.appspot.com",   // ✅ SUDAH BENAR
+  storageBucket: "teknisi-skaliska.firabaseapp.com",
   messagingSenderId: "736577586416",
   appId: "1:736577586416:web:cb8017132e829d92226e35"
 };
