@@ -84,7 +84,6 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <!-- Tombol ganti mode -->
           <button id="btn-toggle-mode" onclick="toggleLayoutMode()" class="w-10 h-10 flex items-center justify-center text-white bg-white/12 rounded-full transition active:scale-90 border border-white/15" title="Ganti mode tampilan">
             <svg id="mode-icon-desktop" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
             <svg id="mode-icon-mobile" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
@@ -231,7 +230,7 @@
     <div class="sheet-body w-full max-w-md p-6 slide-sheet relative z-10 safe-bottom">
       <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-5 sm:hidden"></div>
       <h3 id="modal-title" class="text-xl font-black mb-5 tracking-tight">Form Barang</h3>
-      <input type="hidden" id="edit-id"><input type="hidden" id="edit-image-url">
+      <input type="hidden" id="edit-id">
       <div class="space-y-4">
         <div><label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Nama</label><input type="text" id="item-nama" class="inp" placeholder="Nama barang"></div>
         <div><label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Kategori</label><input type="text" id="item-kategori" class="inp" placeholder="Kategori"></div>
@@ -291,10 +290,10 @@
     <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeSettingsModal()"></div>
     <div class="sheet-body w-full max-w-md p-6 slide-sheet relative z-10 safe-bottom">
       <h3 class="text-xl font-black mb-4 tracking-tight">Pengaturan Logo</h3>
-      <input type="file" accept="image/*" id="logo-upload" onchange="handleLogoUpload(this.files[0])" class="mb-4">
+      <input type="file" accept="image/*" id="logo-upload" onchange="handleLogoUpload(this.files[0])" class="mb-4 w-full">
       <div id="logo-preview-wrap" class="hidden mb-4"><img id="logo-preview" class="w-20 h-20 rounded-full object-cover"></div>
-      <div class="flex gap-3">
-        <button onclick="saveLogo()" class="flex-1 btn-borrow py-3 rounded-2xl font-bold text-sm">Simpan Logo</button>
+      <div class="flex gap-3 flex-wrap">
+        <button id="btn-save-logo" onclick="saveLogo()" class="flex-1 btn-borrow py-3 rounded-2xl font-bold text-sm">Simpan Logo</button>
         <button onclick="resetLogo()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-2xl font-bold text-sm transition active:scale-95">Reset</button>
         <button onclick="closeSettingsModal()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-2xl font-bold text-sm transition active:scale-95">Tutup</button>
       </div>
