@@ -1,305 +1,312 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#0060DF">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Teknisi Skaliska</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beranda — Unit Teknisi TKJ Skaliska, SMK YAPALIS KRIAN</title>
+  <meta name="description" content="Unit layanan resmi Jurusan Teknik Komputer dan Jaringan SMK YAPALIS KRIAN. Layanan servis komputer, instalasi jaringan, konfigurasi MikroTik, CCTV, dan server." />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231B3A5F'/%3E%3Crect x='14' y='20' width='36' height='24' fill='none' stroke='%23FFFFFF' stroke-width='4'/%3E%3Crect x='27' y='48' width='10' height='6' fill='%23FFFFFF'/%3E%3Ccircle cx='22' cy='32' r='2.5' fill='%23FFFFFF'/%3E%3Ccircle cx='32' cy='26' r='2.5' fill='%23FFFFFF'/%3E%3Ccircle cx='42' cy='32' r='2.5' fill='%23FFFFFF'/%3E%3C/svg%3E" />
+
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="antialiased h-screen flex flex-col bg-[var(--surface)]">
+<body>
 
-  <!-- TOAST CONTAINER -->
-  <div id="toast-container" class="fixed top-0 right-0 mt-16 mr-4 z-[999] space-y-2 max-w-xs w-full pointer-events-none flex flex-col items-end" style="padding-top: env(safe-area-inset-top)"></div>
-
-  <!-- CONFIRM DIALOG -->
-  <div id="confirm-dialog" class="hidden fixed inset-0 z-[900] flex items-center justify-center px-5">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeConfirmDialog(false)"></div>
-    <div class="confirm-card w-full max-w-xs fade-up relative z-10">
-      <div class="flex flex-col items-center mb-6">
-        <div class="w-14 h-14 mb-4 rounded-2xl bg-red-50 flex items-center justify-center">
-          <svg class="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        </div>
-        <p id="confirm-message" class="text-gray-900 font-bold text-center text-lg leading-snug mb-1">Hapus?</p>
-        <p id="confirm-detail" class="text-sm text-gray-400 text-center leading-relaxed font-medium">Tindakan ini permanen.</p>
-      </div>
-      <div class="flex gap-3">
-        <button id="confirm-cancel" class="flex-1 bg-gray-100 text-gray-700 text-sm font-bold py-3.5 rounded-2xl transition active:scale-95">Batal</button>
-        <button id="confirm-yes" class="flex-1 bg-red-500 text-white text-sm font-bold py-3.5 rounded-2xl transition active:scale-95 shadow-lg shadow-red-100">Hapus</button>
-      </div>
+  <!-- ===== INFO ATAS ===== -->
+  <div class="top-info">
+    <div class="wrap top-info-inner">
+      <span>Jl. Kyai Mojo No. 18, Krian, Sidoarjo, Jawa Timur 61262</span>
+      <span class="hide-md">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
+        <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">+62 812-3456-7890</a>
+      </span>
+      <span class="hide-sm">Email : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ce8f7f6b2eff7fdf0f5eff7fddcfbf1fdf5f0b2fff3f1">[email&#160;protected]</a></span>
+      <span class="hide-sm">Jam : Senin–Sabtu, 07.00–16.00 WIB</span>
     </div>
   </div>
 
-  <!-- LOGIN VIEW -->
-  <div id="login-view" class="fixed inset-0 z-[800] flex items-center justify-center px-6 login-bg overflow-y-auto">
-    <div class="w-full max-w-sm fade-up pb-10 pt-10">
-      <div class="absolute top-20 right-10 w-40 h-40 rounded-full border border-white/10 pointer-events-none"></div>
-      <div class="absolute top-36 right-4 w-24 h-24 rounded-full border border-white/08 pointer-events-none"></div>
-      <div class="login-card p-8 relative">
-        <div class="text-center mb-8">
-          <div id="login-logo-wrap" class="w-20 h-20 mx-auto mb-5 rounded-3xl bg-white flex items-center justify-center shadow-xl overflow-hidden">
-            <svg id="login-logo-svg" class="w-10 h-10" style="color:var(--blue)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-            <img id="login-logo-img" class="hidden w-full h-full object-cover" alt="Logo">
-          </div>
-          <h1 class="text-2xl font-black text-white mb-1 tracking-tight">Teknisi Skaliska</h1>
-          <p class="text-xs text-blue-200 font-bold tracking-widest uppercase">Sistem Inventaris</p>
-          <p id="login-error" class="text-red-300 text-sm font-bold mt-3 hidden bg-red-500/15 rounded-xl px-3 py-2"></p>
-        </div>
-        <div class="space-y-3">
-          <div>
-            <label class="block text-[10px] font-black text-blue-200 uppercase tracking-widest mb-2 ml-1">Username</label>
-            <input type="text" id="username" class="login-inp" placeholder="Masukkan username" autocomplete="off" autocorrect="off" autocapitalize="none">
-          </div>
-          <div id="password-container" class="hidden">
-            <label class="block text-[10px] font-black text-blue-200 uppercase tracking-widest mb-2 ml-1">Password</label>
-            <input type="password" id="password" class="login-inp" placeholder="••••••••">
-          </div>
-          <button id="btn-login" onclick="handleLogin()" class="w-full bg-white font-black py-4 rounded-2xl mt-4 text-sm shadow-xl transition active:scale-97 flex items-center justify-center gap-2" style="color:var(--blue)">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
-            <span>Masuk Sistem</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- ===== NAVBAR ===== -->
+  <header class="header">
+    <div class="wrap header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-logo">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="14" y="20" width="36" height="24" fill="none" stroke="currentColor" stroke-width="4"/>
+            <rect x="27" y="48" width="10" height="6" fill="currentColor"/>
+            <circle cx="22" cy="32" r="2.5" fill="currentColor"/>
+            <circle cx="32" cy="26" r="2.5" fill="currentColor"/>
+            <circle cx="42" cy="32" r="2.5" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>SMK YAPALIS KRIAN</strong>
+          <small>Unit Teknisi TKJ · Skaliska</small>
+        </span>
+      </a>
 
-  <!-- APP VIEW -->
-  <div id="app-view" class="hidden flex flex-col h-full fade-up relative max-w-[480px] mx-auto w-full">
-    <!-- Header -->
-    <header class="header-wrap text-white safe-top z-20 shrink-0 sticky top-0 pb-5 px-5">
-      <div class="pt-2 flex justify-between items-center mb-5">
-        <div class="flex items-center gap-3">
-          <div id="header-logo-wrap" class="w-11 h-11 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center overflow-hidden">
-            <svg id="header-logo-svg" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-            <img id="header-logo-img" class="hidden w-full h-full object-cover" alt="Logo">
-          </div>
-          <div>
-            <h1 class="font-black text-lg leading-tight tracking-tight">Inventaris</h1>
-            <p class="text-blue-200 text-[10px] font-bold tracking-widest uppercase">TKJ • Skaliska</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button id="btn-toggle-mode" onclick="toggleLayoutMode()" class="w-10 h-10 flex items-center justify-center text-white bg-white/12 rounded-full transition active:scale-90 border border-white/15" title="Ganti mode tampilan">
-            <svg id="mode-icon-desktop" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-            <svg id="mode-icon-mobile" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-          </button>
-          <button id="btn-settings" onclick="openSettingsModal()" class="hidden w-10 h-10 items-center justify-center text-white bg-white/12 rounded-full transition active:scale-90 border border-white/15">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-          </button>
-          <button onclick="handleLogout()" class="w-10 h-10 flex items-center justify-center text-white bg-white/12 rounded-full transition active:scale-90 border border-white/15">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-          </button>
-        </div>
-      </div>
+      <nav class="menu" id="menu" aria-label="Navigasi utama">
+        <a href="index.html" class="menu-link aktif">Beranda</a>
+        <a href="profil.html" class="menu-link">Profil</a>
+        <a href="layanan.html" class="menu-link">Layanan</a>
+        <a href="kegiatan.html" class="menu-link">Kegiatan</a>
+        <a href="kontak.html" class="menu-link">Kontak</a>
+        <a href="https://wa.me/6281234567890?text=Halo%20Unit%20Teknisi%20TKJ%20Skaliska%2C%20saya%20ingin%20mengajukan%20layanan." target="_blank" rel="noopener" class="btn btn-wa menu-cta">
+          <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
+          WhatsApp
+        </a>
+      </nav>
 
-      <!-- Stat Card -->
-      <div class="stat-card p-4 flex items-center gap-4">
-        <div class="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 flex-wrap">
-            <p id="user-display-name" class="font-black text-[15px] text-white truncate">User</p>
-            <span id="user-role-badge" class="px-2 py-0.5 rounded-lg text-[9px] font-black bg-white/20 text-white uppercase tracking-widest border border-white/15">Role</span>
-          </div>
-          <div id="user-pinjaman-info" class="hidden items-center gap-1.5 mt-1 text-[11px] text-blue-100 font-semibold"></div>
-        </div>
-        <div class="flex flex-col items-end border-l border-white/20 pl-4 shrink-0">
-          <p class="text-[9px] text-blue-200 font-black uppercase tracking-widest">Total Item</p>
-          <p id="stat-total-items" class="text-2xl font-black text-white">0</p>
-        </div>
-      </div>
-
-      <!-- Alerts -->
-      <div id="pending-requests-badge" class="hidden mt-3 bg-amber-400/15 border border-amber-400/25 rounded-2xl p-3 flex items-center gap-3 cursor-pointer active:scale-98 transition" onclick="switchTab('riwayat')">
-        <div class="w-8 h-8 rounded-xl bg-amber-400 flex items-center justify-center shrink-0">
-          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-        </div>
-        <p class="text-sm text-white font-bold"><span id="pending-requests-count" class="font-black">0</span> permintaan pengembalian menunggu →</p>
-      </div>
-      <div id="stat-low-stock-wrapper" class="hidden mt-3 bg-red-500/15 border border-red-400/25 rounded-2xl p-3 flex items-center gap-3">
-        <div class="w-8 h-8 rounded-xl bg-red-500 flex items-center justify-center shrink-0">
-          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-        </div>
-        <p class="text-sm text-white font-bold"><span id="stat-low-stock" class="font-black">0</span> barang perlu restock segera!</p>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto no-scrollbar bg-[var(--surface)]" style="padding-bottom: calc(var(--nav-h) + 16px)">
-      <!-- GUDANG TAB -->
-      <div id="gudang-view" class="px-4 pt-5">
-        <div class="sticky top-0 z-10 pb-3 pt-1 bg-[var(--surface)]">
-          <div class="flex gap-2 mb-3">
-            <div class="search-wrap flex-1">
-              <svg class="search-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-              <input type="text" id="search-input" oninput="renderGudangList()" placeholder="Cari nama atau kategori...">
-            </div>
-            <button id="btn-add" onclick="openBarangModal()" class="hidden btn-borrow px-4 rounded-2xl font-bold text-sm items-center justify-center" style="min-width:48px">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
-            </button>
-          </div>
-          <div class="flex gap-2 overflow-x-auto no-scrollbar">
-            <button onclick="setFilter('semua')" data-filter="semua" class="filter-pill active">Semua</button>
-            <button onclick="setFilter('tersedia')" data-filter="tersedia" class="filter-pill">Tersedia</button>
-            <button onclick="setFilter('habis')" data-filter="habis" class="filter-pill">Stok Habis</button>
-          </div>
-        </div>
-        <div id="gudang-list" class="space-y-3 pb-4"></div>
-        <div id="gudang-empty" class="hidden text-center py-20 fade-up">
-          <div class="empty-icon-wrap"><svg class="w-10 h-10" style="color:var(--text-3)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg></div>
-          <p class="font-black text-lg">Tidak Ada Data</p>
-          <p class="text-sm mt-1 font-medium" style="color:var(--text-3)">Tidak ada barang yang sesuai filter.</p>
-        </div>
-      </div>
-
-      <!-- RIWAYAT TAB -->
-      <div id="riwayat-view" class="hidden px-4 pt-5 pb-4">
-        <div class="sticky top-0 z-10 pb-3 pt-1 flex items-center justify-between bg-[var(--surface)]">
-          <div class="section-head mb-0">
-            <div class="section-head-icon"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-            <h3 class="text-lg font-black tracking-tight">Log Transaksi</h3>
-          </div>
-          <button id="btn-clear-log" onclick="clearAllLog()" class="hidden items-center gap-1.5 bg-red-50 border border-red-100 text-red-600 px-3 py-2 rounded-xl text-xs font-bold transition active:scale-95">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-            Hapus Log
-          </button>
-        </div>
-        <div id="pending-requests-section" class="hidden mb-5"></div>
-        <div id="riwayat-list"></div>
-        <div id="riwayat-empty" class="hidden text-center py-20 fade-up">
-          <div class="empty-icon-wrap"><svg class="w-10 h-10" style="color:var(--text-3)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-          <p class="font-black text-lg">Riwayat Kosong</p>
-          <p class="text-sm mt-1 font-medium" style="color:var(--text-3)">Belum ada aktivitas transaksi.</p>
-        </div>
-      </div>
-
-      <!-- PENGGUNA TAB -->
-      <div id="pengguna-view" class="hidden px-4 pt-5 pb-4">
-        <div class="sticky top-0 z-10 pb-3 pt-1 flex items-center justify-between bg-[var(--surface)]">
-          <div class="section-head mb-0">
-            <div class="section-head-icon"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
-            <h3 class="text-lg font-black tracking-tight">Kelola Teknisi</h3>
-          </div>
-          <button onclick="openUserModal('add')" class="btn-borrow px-4 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
-            <span>Tambah</span>
-          </button>
-        </div>
-        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 mb-4 flex items-start gap-3">
-          <div class="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center shrink-0 mt-0.5">
-            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          </div>
-          <p class="text-xs text-blue-700 font-semibold leading-relaxed">Login teknisi menggunakan <strong>nama & password</strong>. Password wajib diisi saat tambah, opsional saat edit.</p>
-        </div>
-        <div id="pengguna-list" class="space-y-3"></div>
-        <div id="pengguna-empty" class="hidden text-center py-20 fade-up">
-          <div class="empty-icon-wrap"><svg class="w-10 h-10" style="color:var(--text-3)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
-          <p class="font-black text-lg">Belum Ada Teknisi</p>
-          <p class="text-sm mt-1 font-medium" style="color:var(--text-3)">Tambah akun teknisi lewat tombol di atas.</p>
-        </div>
-      </div>
-    </main>
-
-    <!-- BOTTOM NAV -->
-    <nav class="bottom-nav fixed bottom-0 left-0 right-0 flex z-30 safe-bottom max-w-[480px] mx-auto">
-      <button onclick="switchTab('gudang')" id="nav-gudang" class="nav-pill active">
-        <div class="nav-indicator"></div>
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-        <span>Gudang</span>
+      <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
-      <button onclick="switchTab('riwayat')" id="nav-riwayat" class="nav-pill">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <span>Riwayat</span>
-      </button>
-      <button onclick="switchTab('pengguna')" id="nav-pengguna" class="hidden nav-pill">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-        <span>Teknisi</span>
-      </button>
-    </nav>
-  </div>
+    </div>
+  </header>
 
-  <!-- MODAL BARANG -->
-  <div id="admin-modal" class="hidden fixed inset-0 z-[600] flex items-end sm:items-center justify-center sm:px-4">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeBarangModal()"></div>
-    <div class="sheet-body w-full max-w-md p-6 slide-sheet relative z-10 safe-bottom">
-      <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-5 sm:hidden"></div>
-      <h3 id="modal-title" class="text-xl font-black mb-5 tracking-tight">Form Barang</h3>
-      <input type="hidden" id="edit-id">
-      <div class="space-y-4">
-        <div><label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Nama</label><input type="text" id="item-nama" class="inp" placeholder="Nama barang"></div>
-        <div><label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Kategori</label><input type="text" id="item-kategori" class="inp" placeholder="Kategori"></div>
-        <div><label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Stok</label><input type="number" id="item-stok" class="inp" placeholder="0"></div>
-        <div><label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Lokasi</label><input type="text" id="item-lokasi" class="inp" placeholder="Lokasi"></div>
-        <div><label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Gambar (URL)</label><input type="text" id="edit-image-url" class="inp" placeholder="https://..."></div>
+  <main>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <img src="img/hero.jpg" alt="" onerror="this.remove()" />
+        <div class="hero-veil"></div>
       </div>
-      <div class="flex gap-3 mt-6">
-        <button onclick="closeBarangModal()" class="flex-1 bg-gray-100 text-gray-700 text-sm font-bold py-3.5 rounded-2xl transition active:scale-95">Batal</button>
-        <button id="btn-save-barang" onclick="saveBarang()" class="flex-[2] btn-borrow text-sm font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
-          <span>Simpan</span>
-        </button>
+      <div class="wrap hero-inner">
+        <span class="kicker">Sekolah Menengah Kejuruan Yapalis Krian</span>
+        <h1>Unit Teknisi <span>TKJ</span> Skaliska</h1>
+        <p class="hero-desc">
+          Unit layanan resmi Jurusan Teknik Komputer dan Jaringan (TKJ) — melayani perbaikan dan perawatan
+          perangkat komputer, instalasi jaringan, konfigurasi perangkat jaringan, sistem pengawasan CCTV,
+          serta administrasi server. Dikerjakan tenaga terlatih di bawah supervisi guru pembimbing.
+        </p>
+        <div class="hero-actions">
+          <a href="https://wa.me/6281234567890?text=Halo%20Unit%20Teknisi%20TKJ%20Skaliska%2C%20saya%20ingin%20konsultasi%20layanan." target="_blank" rel="noopener" class="btn btn-wa">
+            <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
+            Konsultasi via WhatsApp
+          </a>
+          <a href="layanan.html" class="btn btn-outline-light">Lihat Layanan</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat"><b>150+</b><small>Perangkat ditangani</small></div>
+          <div class="hero-stat"><b>30+</b><small>Proyek jaringan</small></div>
+          <div class="hero-stat"><b>12+</b><small>Instalasi CCTV</small></div>
+          <div class="hero-stat"><b>95%</b><small>Tingkat kepuasan</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SEKILAS ===== -->
+    <section class="sec" id="sekilas">
+      <div class="wrap grid-2">
+        <div>
+          <div class="sec-head">
+            <span class="kicker">Selamat Datang</span>
+            <h2 class="sec-title">Sekilas Unit Teknisi TKJ</h2>
+            <div class="sec-line"></div>
+          </div>
+          <p>
+            Unit Teknisi TKJ Skaliska dibentuk sebagai wujud pembelajaran berbasis praktik yang memberikan
+            layanan kepada warga sekolah, orang tua, serta masyarakat umum. Seluruh pekerjaan ditangani
+            siswa-siswi terpilih di bawah supervisi langsung guru pembimbing yang bersertifikat.
+          </p>
+          <p>
+            Setiap layanan didokumentasikan secara lengkap: formulir penerimaan, estimasi biaya tertulis,
+            hingga berita acara serah terima beserta kartu garansi.
+          </p>
+          <a href="profil.html" class="btn btn-outline">Selengkapnya Tentang Unit</a>
+        </div>
+
+        <table class="tabel">
+          <caption>Informasi Unit</caption>
+          <tbody>
+            <tr><th class="kunci">Nama Unit</th><td>Unit Teknisi TKJ Skaliska</td></tr>
+            <tr><th>Lembaga</th><td>SMK YAPALIS KRIAN</td></tr>
+            <tr><th>Alamat</th><td>Jl. Kyai Mojo No. 18, Krian, Sidoarjo, Jawa Timur 61262</td></tr>
+            <tr><th>Telepon / WhatsApp</th><td>+62 812-3456-7890</td></tr>
+            <tr><th>Surat Elektronik</th><td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="61150a0b4f120a000d08120a0021060c00080d4f020e0c">[email&#160;protected]</a></td></tr>
+            <tr><th>Jam Layanan</th><td>Senin–Jumat 07.00–16.00 WIB · Sabtu 07.00–12.00 WIB</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== KEUNGGULAN ===== -->
+    <section class="sec sec-abu">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="kicker">Kenapa Unit Ini</span>
+          <h2 class="sec-title">Dasar Kepercayaan Layanan</h2>
+          <div class="sec-line"></div>
+        </div>
+        <div class="grid-4">
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M12 2l2.9 5.9 6.6.9-4.8 4.6 1.2 6.5L12 17l-5.9 3.1 1.2-6.5L2.5 8.8l6.6-.9L12 2z" fill="currentColor"/></svg></span>
+            <h3>Tenaga Terlatih</h3>
+            <p>Dibimbing guru bersertifikat MikroTik dan trainer jaringan.</p>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M3 3v18h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 14l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>Biaya Transparan</h3>
+            <p>Estimasi biaya disampaikan tertulis dan disetujui pemohon.</p>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M12 2l8 3.5v5.2c0 5-3.4 9.6-8 11.3-4.6-1.7-8-6.3-8-11.3V5.5L12 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>Garansi Tertulis</h3>
+            <p>Setiap pekerjaan disertai kartu garansi sesuai jenis layanan.</p>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            <h3>Tepat Waktu</h3>
+            <p>Estimasi durasi disampaikan sejak awal dan menjadi komitmen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LAYANAN RINGKAS ===== -->
+    <section class="sec" id="layanan">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="kicker">Bidang Layanan</span>
+          <h2 class="sec-title">Layanan yang Kami Sediakan</h2>
+          <div class="sec-line"></div>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><rect x="2" y="3" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 21h8m-4-4v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            <h3>Servis &amp; Perawatan Komputer</h3>
+            <p>Perbaikan PC/laptop, instalasi sistem operasi, upgrade komponen, dan perawatan berkala.</p>
+            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>Instalasi Jaringan LAN / WiFi</h3>
+            <p>Penarikan kabel UTP, crimping, pemasangan access point, dan pengaturan alamat IP.</p>
+            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18" r="2.4" fill="currentColor"/></svg></span>
+            <h3>Konfigurasi Perangkat Jaringan</h3>
+            <p>Pengaturan router/MikroTik, manajemen bandwidth, firewall, dan sistem hotspot.</p>
+            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M12 4L3 8v8l9 4 9-4V8l-9-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+            <h3>Sistem Pengawasan CCTV</h3>
+            <p>Pemasangan kamera analog/IP, perekam DVR/NVR, dan akses pemantauan jarak jauh.</p>
+            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><rect x="3" y="4" width="18" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="18" height="6" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+            <h3>Administrasi Server &amp; Hosting</h3>
+            <p>Instalasi dan pemeliharaan server, web server, pengelolaan domain, dan hosting.</p>
+            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4L15 12l-3-3 2.7-2.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>Pemulihan Data &amp; Bantuan Teknis</h3>
+            <p>Pencadangan, pemulihan berkas yang hilang, dan pendampingan teknis pengguna.</p>
+            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== KEGIATAN TERBARU ===== -->
+    <section class="sec sec-abu" id="kegiatan">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="kicker">Kegiatan / Pekerjaan</span>
+          <h2 class="sec-title">Kegiatan Terbaru Unit</h2>
+          <div class="sec-line"></div>
+        </div>
+
+        <div class="keg-row">
+          <span class="tgl">Jul 2026</span>
+          <span class="ket">Perawatan berkala jaringan dan perangkat sekolah</span>
+          <span class="sts"><span class="badge">Selesai</span></span>
+        </div>
+        <div class="keg-row">
+          <span class="tgl">Jun 2026</span>
+          <span class="ket">Instalasi WiFi untuk UMKM — 6 titik access point, Krian</span>
+          <span class="sts"><span class="badge">Selesai</span></span>
+        </div>
+        <div class="keg-row">
+          <span class="tgl">Mei 2026</span>
+          <span class="ket">Pemulihan data dan pencadangan server sekolah</span>
+          <span class="sts"><span class="badge">Selesai</span></span>
+        </div>
+
+        <p style="margin-top:16px">
+          <a href="kegiatan.html" class="btn btn-outline">Lihat Semua Kegiatan</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta-band">
+      <div class="wrap">
+        <h2>Punya kebutuhan servis atau jaringan?</h2>
+        <p>Konsultasi awal tidak dipungut biaya. Tim kami merespons pada jam layanan.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/6281234567890?text=Halo%20Unit%20Teknisi%20TKJ%20Skaliska%2C%20saya%20ingin%20bertanya%20tentang%20layanan." target="_blank" rel="noopener" class="btn btn-wa">
+            <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
+            Chat WhatsApp
+          </a>
+          <a href="kontak.html" class="btn btn-outline-light">Hubungi Kami</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== KAKI ===== -->
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div class="f-about">
+        <strong>SMK YAPALIS KRIAN</strong>
+        <p>
+          Unit Teknisi TKJ Skaliska — unit layanan resmi Jurusan Teknik Komputer dan Jaringan SMK YAPALIS
+          KRIAN, Krian, Sidoarjo. Melayani kebutuhan teknologi informasi secara profesional, transparan,
+          dan bergaransi.
+        </p>
+      </div>
+      <div class="f-col">
+        <h4>Navigasi</h4>
+        <a href="index.html">Beranda</a>
+        <a href="profil.html">Profil</a>
+        <a href="layanan.html">Layanan</a>
+        <a href="kegiatan.html">Kegiatan</a>
+        <a href="kontak.html">Kontak</a>
+      </div>
+      <div class="f-col">
+        <h4>Layanan</h4>
+        <a href="layanan.html">Servis komputer</a>
+        <a href="layanan.html">Instalasi jaringan</a>
+        <a href="layanan.html">Konfigurasi MikroTik</a>
+        <a href="layanan.html">Instalasi CCTV</a>
+        <a href="layanan.html">Server &amp; hosting</a>
+      </div>
+      <div class="f-col">
+        <h4>Kontak</h4>
+        <p>Jl. Kyai Mojo No. 18, Krian, Sidoarjo, Jawa Timur 61262</p>
+        <p><a href="https://wa.me/6281234567890" target="_blank" rel="noopener">+62 812-3456-7890 (WhatsApp)</a></p>
+        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="691d0203471a020805001a0208290e04080005470a0604">[email&#160;protected]</a></p>
+        <p>Senin–Sabtu · 07.00–16.00 WIB</p>
       </div>
     </div>
-  </div>
-
-  <!-- MODAL PENGGUNA (Tambah/Edit) -->
-  <div id="user-modal" class="hidden fixed inset-0 z-[600] flex items-end sm:items-center justify-center sm:px-4">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeUserModal()"></div>
-    <div class="sheet-body w-full max-w-md p-6 slide-sheet relative z-10 safe-bottom">
-      <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-5 sm:hidden"></div>
-      <div class="flex items-center gap-3 mb-5">
-        <div class="w-11 h-11 rounded-2xl bg-blue-50 flex items-center justify-center">
-          <svg class="w-5 h-5" style="color:var(--blue)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
-        </div>
-        <div>
-          <h3 id="user-modal-title" class="text-xl font-black tracking-tight">Tambah Teknisi</h3>
-          <p class="text-xs font-semibold" style="color:var(--text-3)">Daftarkan akun baru</p>
-        </div>
-      </div>
-      <input type="hidden" id="edit-user-id">
-      <div class="space-y-4 mb-5">
-        <div>
-          <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Nama Teknisi</label>
-          <input type="text" id="new-user-nama" class="inp" placeholder="Contoh: Budi Santoso" autocorrect="off" autocapitalize="words">
-          <p class="text-[10px] text-gray-400 font-semibold mt-1 ml-1">Nama ini digunakan saat login. Case‑sensitive.</p>
-        </div>
-        <div>
-          <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Password</label>
-          <input type="text" id="new-user-password" class="inp" placeholder="Minimal 4 karakter" autocomplete="off">
-          <p class="text-[10px] text-gray-400 font-semibold mt-1 ml-1" id="password-hint">Password wajib diisi.</p>
-        </div>
-      </div>
-      <div class="flex gap-3">
-        <button onclick="closeUserModal()" class="flex-1 bg-gray-100 text-gray-700 text-sm font-bold py-3.5 rounded-2xl transition active:scale-95">Batal</button>
-        <button id="btn-save-user" onclick="saveUser()" class="flex-[2] btn-borrow text-sm font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
-          <span id="btn-save-user-text">Daftarkan</span>
-        </button>
+    <div class="footer-bottom">
+      <div class="wrap">
+        <p>© <span id="year">2026</span> Unit Teknisi TKJ Skaliska — SMK YAPALIS KRIAN · Krian, Sidoarjo.</p>
       </div>
     </div>
-  </div>
+  </footer>
 
-  <!-- MODAL SETTINGS -->
-  <div id="settings-modal" class="hidden fixed inset-0 z-[600] flex items-end sm:items-center justify-center sm:px-4">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeSettingsModal()"></div>
-    <div class="sheet-body w-full max-w-md p-6 slide-sheet relative z-10 safe-bottom">
-      <h3 class="text-xl font-black mb-4 tracking-tight">Pengaturan Logo</h3>
-      <input type="file" accept="image/*" id="logo-upload" onchange="handleLogoUpload(this.files[0])" class="mb-4 w-full">
-      <div id="logo-preview-wrap" class="hidden mb-4"><img id="logo-preview" class="w-20 h-20 rounded-full object-cover"></div>
-      <div class="flex gap-3 flex-wrap">
-        <button id="btn-save-logo" onclick="saveLogo()" class="flex-1 btn-borrow py-3 rounded-2xl font-bold text-sm">Simpan Logo</button>
-        <button onclick="resetLogo()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-2xl font-bold text-sm transition active:scale-95">Reset</button>
-        <button onclick="closeSettingsModal()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-2xl font-bold text-sm transition active:scale-95">Tutup</button>
-      </div>
-    </div>
-  </div>
+  <!-- ===== WHATSAPP MELAYANG ===== -->
+  <a href="https://wa.me/6281234567890?text=Halo%20Unit%20Teknisi%20TKJ%20Skaliska%2C%20saya%20ingin%20bertanya." target="_blank" rel="noopener" class="wa-fab" aria-label="Chat WhatsApp">
+    <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
+  </a>
 
-  <script type="module" src="app.js"></script>
-</body>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2d9b8e88e98fda2',t:'MTc4NzE0ODQyMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
