@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beranda — Unit Teknisi TKJ Skaliska, SMK YAPALIS KRIAN</title>
-  <meta name="description" content="Unit layanan resmi Jurusan Teknik Komputer dan Jaringan SMK YAPALIS KRIAN. Layanan servis komputer, instalasi jaringan, konfigurasi MikroTik, CCTV, dan server." />
+  <title>Unit Teknisi TKJ Skaliska — SMK YAPALIS KRIAN</title>
+  <meta name="description" content="Unit layanan resmi Jurusan Teknik Komputer dan Jaringan SMK YAPALIS KRIAN. Layanan servis komputer, instalasi jaringan, konfigurasi MikroTik, CCTV, dan server. Kegiatan, profil, dan pengajuan layanan via WhatsApp." />
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231B3A5F'/%3E%3Crect x='14' y='20' width='36' height='24' fill='none' stroke='%23FFFFFF' stroke-width='4'/%3E%3Crect x='27' y='48' width='10' height='6' fill='%23FFFFFF'/%3E%3Ccircle cx='22' cy='32' r='2.5' fill='%23FFFFFF'/%3E%3Ccircle cx='32' cy='26' r='2.5' fill='%23FFFFFF'/%3E%3Ccircle cx='42' cy='32' r='2.5' fill='%23FFFFFF'/%3E%3C/svg%3E" />
 
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -20,7 +20,7 @@
         <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
         <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">+62 812-3456-7890</a>
       </span>
-      <span class="hide-sm">Email : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ce8f7f6b2eff7fdf0f5eff7fddcfbf1fdf5f0b2fff3f1">[email&#160;protected]</a></span>
+      <span class="hide-sm">Email : tkj.skaliska@gmail.com</span>
       <span class="hide-sm">Jam : Senin–Sabtu, 07.00–16.00 WIB</span>
     </div>
   </div>
@@ -28,7 +28,7 @@
   <!-- ===== NAVBAR ===== -->
   <header class="header">
     <div class="wrap header-inner">
-      <a href="index.html" class="brand">
+      <a href="#beranda" class="brand">
         <span class="brand-logo">
           <svg viewBox="0 0 64 64" aria-hidden="true">
             <rect x="14" y="20" width="36" height="24" fill="none" stroke="currentColor" stroke-width="4"/>
@@ -45,11 +45,11 @@
       </a>
 
       <nav class="menu" id="menu" aria-label="Navigasi utama">
-        <a href="index.html" class="menu-link aktif">Beranda</a>
-        <a href="profil.html" class="menu-link">Profil</a>
-        <a href="layanan.html" class="menu-link">Layanan</a>
-        <a href="kegiatan.html" class="menu-link">Kegiatan</a>
-        <a href="kontak.html" class="menu-link">Kontak</a>
+        <a href="#beranda" class="menu-link">Beranda</a>
+        <a href="#profil" class="menu-link">Profil</a>
+        <a href="#layanan" class="menu-link">Layanan</a>
+        <a href="#kegiatan" class="menu-link">Kegiatan</a>
+        <a href="#kontak" class="menu-link">Kontak</a>
         <a href="https://wa.me/6281234567890?text=Halo%20Unit%20Teknisi%20TKJ%20Skaliska%2C%20saya%20ingin%20mengajukan%20layanan." target="_blank" rel="noopener" class="btn btn-wa menu-cta">
           <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
           WhatsApp
@@ -64,10 +64,10 @@
 
   <main>
 
-    <!-- ===== HERO ===== -->
-    <section class="hero">
+    <!-- ===== BERANDA ===== -->
+    <section class="hero" id="beranda">
       <div class="hero-bg" aria-hidden="true">
-        <img src="img/hero.jpg" alt="" onerror="this.remove()" />
+        <img src="hero.jpg" alt="" onerror="this.remove()" />
         <div class="hero-veil"></div>
       </div>
       <div class="wrap hero-inner">
@@ -83,7 +83,7 @@
             <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
             Konsultasi via WhatsApp
           </a>
-          <a href="layanan.html" class="btn btn-outline-light">Lihat Layanan</a>
+          <a href="#layanan" class="btn btn-outline-light">Lihat Layanan</a>
         </div>
 
         <div class="hero-stats">
@@ -113,7 +113,6 @@
             Setiap layanan didokumentasikan secara lengkap: formulir penerimaan, estimasi biaya tertulis,
             hingga berita acara serah terima beserta kartu garansi.
           </p>
-          <a href="profil.html" class="btn btn-outline">Selengkapnya Tentang Unit</a>
         </div>
 
         <table class="tabel">
@@ -123,7 +122,7 @@
             <tr><th>Lembaga</th><td>SMK YAPALIS KRIAN</td></tr>
             <tr><th>Alamat</th><td>Jl. Kyai Mojo No. 18, Krian, Sidoarjo, Jawa Timur 61262</td></tr>
             <tr><th>Telepon / WhatsApp</th><td>+62 812-3456-7890</td></tr>
-            <tr><th>Surat Elektronik</th><td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="61150a0b4f120a000d08120a0021060c00080d4f020e0c">[email&#160;protected]</a></td></tr>
+            <tr><th>Surat Elektronik</th><td>tkj.skaliska@gmail.com</td></tr>
             <tr><th>Jam Layanan</th><td>Senin–Jumat 07.00–16.00 WIB · Sabtu 07.00–12.00 WIB</td></tr>
           </tbody>
         </table>
@@ -163,97 +162,233 @@
       </div>
     </section>
 
-    <!-- ===== LAYANAN RINGKAS ===== -->
-    <section class="sec" id="layanan">
+    <!-- ===== PROFIL ===== -->
+    <section class="sec" id="profil">
       <div class="wrap">
         <div class="sec-head">
-          <span class="kicker">Bidang Layanan</span>
-          <h2 class="sec-title">Layanan yang Kami Sediakan</h2>
+          <span class="kicker">Profil Unit</span>
+          <h2 class="sec-title">Unit layanan resmi yang dikelola jurusan</h2>
+          <div class="sec-line"></div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <p>
+              Unit Teknisi TKJ Skaliska merupakan unit layanan Jurusan Teknik Komputer dan Jaringan SMK
+              YAPALIS KRIAN. Unit ini dibentuk sebagai wujud pembelajaran berbasis praktik, sekaligus
+              menjawab kebutuhan layanan teknologi informasi warga sekolah, orang tua, dan masyarakat umum.
+            </p>
+            <p>
+              Seluruh pekerjaan ditangani siswa-siswi terpilih di bawah supervisi langsung guru pembimbing
+              yang bersertifikat. Setiap layanan didokumentasikan secara lengkap melalui formulir penerimaan,
+              estimasi biaya tertulis, hingga berita acara serah terima beserta kartu garansi.
+            </p>
+            <p>
+              Jurusan TKJ SMK YAPALIS KRIAN terdaftar sebagai mitra MikroTik Academy, sehingga layanan
+              konfigurasi perangkat jaringan mengikuti standar kurikulum yang berlaku.
+            </p>
+          </div>
+
+          <div>
+            <p style="font-weight:700;color:var(--navy-900);margin-bottom:10px">Prinsip Layanan Unit</p>
+            <ul style="list-style:disc;padding-left:22px;margin-bottom:14px">
+              <li>Layanan dilaksanakan berdasarkan permohonan tertulis dari pemohon.</li>
+              <li>Setiap pekerjaan disertai estimasi biaya yang disetujui pemohon sebelum pelaksanaan.</li>
+              <li>Hasil pekerjaan diserahkan melalui berita acara serah terima dan kartu garansi.</li>
+              <li>Data dan berkas pemohon diperlakukan profesional serta dijaga kerahasiaannya.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sec-head" style="margin-top:44px">
+          <span class="kicker">Struktur Tim</span>
+          <h2 class="sec-title">Tim Pelaksana Layanan</h2>
           <div class="sec-line"></div>
         </div>
         <div class="grid-3">
           <div class="card">
-            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><rect x="2" y="3" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 21h8m-4-4v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
-            <h3>Servis &amp; Perawatan Komputer</h3>
-            <p>Perbaikan PC/laptop, instalasi sistem operasi, upgrade komponen, dan perawatan berkala.</p>
-            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <h3>Ahmad Fauzi, S.Kom.</h3>
+            <p><strong style="color:var(--tq-700)">Guru Pembimbing</strong><br/>Bersertifikat MikroTik MTCNA · Trainer jaringan.</p>
           </div>
           <div class="card">
-            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3>Instalasi Jaringan LAN / WiFi</h3>
-            <p>Penarikan kabel UTP, crimping, pemasangan access point, dan pengaturan alamat IP.</p>
-            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <h3>Rafi Pratama</h3>
+            <p><strong style="color:var(--tq-700)">Ketua Pelaksana</strong><br/>Perakitan dan perbaikan perangkat.</p>
           </div>
           <div class="card">
-            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18" r="2.4" fill="currentColor"/></svg></span>
-            <h3>Konfigurasi Perangkat Jaringan</h3>
-            <p>Pengaturan router/MikroTik, manajemen bandwidth, firewall, dan sistem hotspot.</p>
-            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <h3>Dimas Saputra</h3>
+            <p><strong style="color:var(--tq-700)">Koordinator Jaringan</strong><br/>Konfigurasi MikroTik dan routing.</p>
           </div>
           <div class="card">
-            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M12 4L3 8v8l9 4 9-4V8l-9-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
-            <h3>Sistem Pengawasan CCTV</h3>
-            <p>Pemasangan kamera analog/IP, perekam DVR/NVR, dan akses pemantauan jarak jauh.</p>
-            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <h3>Nadia Ayu Lestari</h3>
+            <p><strong style="color:var(--tq-700)">Koordinator Administrasi</strong><br/>Penjadwalan dan serah terima.</p>
           </div>
           <div class="card">
-            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><rect x="3" y="4" width="18" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="18" height="6" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
-            <h3>Administrasi Server &amp; Hosting</h3>
-            <p>Instalasi dan pemeliharaan server, web server, pengelolaan domain, dan hosting.</p>
-            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <h3>Bayu Nugroho</h3>
+            <p><strong style="color:var(--tq-700)">Teknisi CCTV &amp; Server</strong><br/>Sistem pengawasan dan administrasi server.</p>
           </div>
           <div class="card">
-            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4L15 12l-3-3 2.7-2.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3>Pemulihan Data &amp; Bantuan Teknis</h3>
-            <p>Pencadangan, pemulihan berkas yang hilang, dan pendampingan teknis pengguna.</p>
-            <a href="layanan.html" class="more">Selengkapnya <svg viewBox="0 0 24 24" class="ic"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <h3>Salsabila Putri</h3>
+            <p><strong style="color:var(--tq-700)">Teknisi Perangkat Lunak</strong><br/>Sistem operasi dan pemulihan data.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== KEGIATAN TERBARU ===== -->
-    <section class="sec sec-abu" id="kegiatan">
+    <!-- ===== LAYANAN ===== -->
+    <section class="sec sec-abu" id="layanan">
       <div class="wrap">
         <div class="sec-head">
-          <span class="kicker">Kegiatan / Pekerjaan</span>
-          <h2 class="sec-title">Kegiatan Terbaru Unit</h2>
+          <span class="kicker">Bidang Layanan</span>
+          <h2 class="sec-title">Ruang Lingkup Layanan</h2>
           <div class="sec-line"></div>
+          <p class="sec-lead">Layanan ditangani langsung oleh tim teknisi unit, dari perangkat pribadi hingga infrastruktur jaringan.</p>
         </div>
 
-        <div class="keg-row">
-          <span class="tgl">Jul 2026</span>
-          <span class="ket">Perawatan berkala jaringan dan perangkat sekolah</span>
-          <span class="sts"><span class="badge">Selesai</span></span>
-        </div>
-        <div class="keg-row">
-          <span class="tgl">Jun 2026</span>
-          <span class="ket">Instalasi WiFi untuk UMKM — 6 titik access point, Krian</span>
-          <span class="sts"><span class="badge">Selesai</span></span>
-        </div>
-        <div class="keg-row">
-          <span class="tgl">Mei 2026</span>
-          <span class="ket">Pemulihan data dan pencadangan server sekolah</span>
-          <span class="sts"><span class="badge">Selesai</span></span>
+        <div class="grid-3">
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><rect x="2" y="3" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 21h8m-4-4v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            <h3>1. Servis &amp; Perawatan Komputer</h3>
+            <p>Perbaikan PC dan laptop, instalasi sistem operasi, pemutakhiran komponen (upgrade), serta perawatan berkala perangkat.</p>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>2. Instalasi Jaringan LAN / WiFi</h3>
+            <p>Penarikan kabel UTP, penyambungan konektor (crimping), pemasangan access point, dan pengaturan alamat IP.</p>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18" r="2.4" fill="currentColor"/></svg></span>
+            <h3>3. Konfigurasi Perangkat Jaringan</h3>
+            <p>Pengaturan router dan MikroTik, manajemen bandwidth, firewall, serta sistem hotspot sesuai standar MikroTik Academy.</p>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M12 4L3 8v8l9 4 9-4V8l-9-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+            <h3>4. Sistem Pengawasan CCTV</h3>
+            <p>Pemasangan kamera analog/IP, perekam DVR/NVR, hingga konfigurasi akses pemantauan jarak jauh.</p>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><rect x="3" y="4" width="18" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="18" height="6" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+            <h3>5. Administrasi Server &amp; Hosting</h3>
+            <p>Instalasi dan pemeliharaan server, web server, pengelolaan domain, serta hosting untuk sekolah dan UMKM.</p>
+          </div>
+          <div class="card">
+            <span class="ic-box"><svg viewBox="0 0 24 24" class="ic"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4L15 12l-3-3 2.7-2.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>6. Pemulihan Data &amp; Bantuan Teknis</h3>
+            <p>Pencadangan, pemulihan berkas yang hilang atau terhapus, serta pendampingan teknis bagi pengguna.</p>
+          </div>
         </div>
 
-        <p style="margin-top:16px">
-          <a href="kegiatan.html" class="btn btn-outline">Lihat Semua Kegiatan</a>
+        <p class="catatan">
+          Layanan panggilan (on-site) tersedia untuk wilayah Krian, Sidoarjo, dan sekitarnya. Biaya
+          kunjungan diinformasikan pada awal sesuai jarak tempuh.
         </p>
       </div>
     </section>
 
-    <!-- ===== CTA ===== -->
-    <section class="cta-band">
+    <!-- ===== KEGIATAN ===== -->
+    <section class="sec" id="kegiatan">
       <div class="wrap">
-        <h2>Punya kebutuhan servis atau jaringan?</h2>
-        <p>Konsultasi awal tidak dipungut biaya. Tim kami merespons pada jam layanan.</p>
-        <div class="cta-actions">
-          <a href="https://wa.me/6281234567890?text=Halo%20Unit%20Teknisi%20TKJ%20Skaliska%2C%20saya%20ingin%20bertanya%20tentang%20layanan." target="_blank" rel="noopener" class="btn btn-wa">
+        <div class="sec-head">
+          <span class="kicker">Kegiatan / Pekerjaan Unit</span>
+          <h2 class="sec-title">Catatan Kegiatan yang Telah Dilaksanakan</h2>
+          <div class="sec-line"></div>
+          <p class="sec-lead">Daftar diperbarui secara berkala.</p>
+        </div>
+
+        <div style="overflow-x:auto">
+          <table class="tabel">
+            <thead>
+              <tr>
+                <th style="width:56px">No.</th>
+                <th style="width:110px">Periode</th>
+                <th>Kegiatan / Pekerjaan</th>
+                <th style="width:210px">Lokasi</th>
+                <th style="width:90px">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Jan 2026</td><td>Servis dan perawatan 25 unit komputer</td><td>Lab Komputer TKJ, SMK YAPALIS KRIAN</td><td><span class="badge">Selesai</span></td></tr>
+              <tr><td>2</td><td>Feb 2026</td><td>Instalasi jaringan LAN kantor, 12 titik</td><td>Kantor Desa, Kecamatan Krian</td><td><span class="badge">Selesai</span></td></tr>
+              <tr><td>3</td><td>Mar 2026</td><td>Konfigurasi router MikroTik dan manajemen bandwidth</td><td>SMK YAPALIS KRIAN</td><td><span class="badge">Selesai</span></td></tr>
+              <tr><td>4</td><td>Apr 2026</td><td>Pemasangan 4 titik kamera CCTV</td><td>Lingkungan SMK YAPALIS KRIAN</td><td><span class="badge">Selesai</span></td></tr>
+              <tr><td>5</td><td>Mei 2026</td><td>Pemulihan data dan pencadangan server sekolah</td><td>SMK YAPALIS KRIAN</td><td><span class="badge">Selesai</span></td></tr>
+              <tr><td>6</td><td>Jun 2026</td><td>Instalasi WiFi untuk UMKM, 6 titik access point</td><td>Krian, Sidoarjo</td><td><span class="badge">Selesai</span></td></tr>
+              <tr><td>7</td><td>Jul 2026</td><td>Perawatan berkala jaringan dan perangkat sekolah</td><td>SMK YAPALIS KRIAN</td><td><span class="badge">Selesai</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="catatan">
+          Permohonan pekerjaan baru dapat diajukan melalui
+          <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">WhatsApp unit</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== KONTAK ===== -->
+    <section class="sec sec-abu" id="kontak">
+      <div class="wrap grid-2">
+        <div>
+          <div class="sec-head">
+            <span class="kicker">Kontak</span>
+            <h2 class="sec-title">Hubungi Kami</h2>
+            <div class="sec-line"></div>
+          </div>
+
+          <table class="tabel">
+            <tbody>
+              <tr><th class="kunci">Alamat</th><td>Jl. Kyai Mojo No. 18, Krian, Sidoarjo, Jawa Timur 61262</td></tr>
+              <tr><th>Telepon / WhatsApp</th><td>+62 812-3456-7890</td></tr>
+              <tr><th>Surat Elektronik</th><td>tkj.skaliska@gmail.com</td></tr>
+              <tr><th>Jam Layanan</th><td>Senin–Jumat 07.00–16.00 WIB<br/>Sabtu 07.00–12.00 WIB</td></tr>
+            </tbody>
+          </table>
+
+          <a href="https://wa.me/6281234567890?text=Halo%20Unit%20Teknisi%20TKJ%20Skaliska%2C%20saya%20ingin%20mengajukan%20layanan." target="_blank" rel="noopener" class="btn btn-wa btn-block">
             <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
-            Chat WhatsApp
+            Chat WhatsApp Sekarang
           </a>
-          <a href="kontak.html" class="btn btn-outline-light">Hubungi Kami</a>
+        </div>
+
+        <div>
+          <div class="sec-head">
+            <span class="kicker">Formulir</span>
+            <h2 class="sec-title">Permohonan Layanan</h2>
+            <div class="sec-line"></div>
+          </div>
+
+          <form class="form" id="kontak-form" novalidate>
+            <div class="f-group">
+              <label for="f-nama">Nama Lengkap <em>*</em></label>
+              <input type="text" id="f-nama" name="nama" placeholder="Nama lengkap pemohon" required />
+            </div>
+            <div class="f-group">
+              <label for="f-wa">No. HP / WhatsApp <em>*</em></label>
+              <input type="text" id="f-wa" name="kontak" placeholder="08xx-xxxx-xxxx" required />
+            </div>
+            <div class="f-group">
+              <label for="f-inst">Institusi / Instansi</label>
+              <input type="text" id="f-inst" name="inst" placeholder="Sekolah, kantor, atau lainnya (opsional)" />
+            </div>
+            <div class="f-group">
+              <label for="f-layanan">Jenis Layanan <em>*</em></label>
+              <select id="f-layanan" name="layanan" required>
+                <option value="" selected disabled>— Pilih jenis layanan —</option>
+                <option>Servis dan Perawatan Komputer</option>
+                <option>Instalasi Jaringan LAN / WiFi</option>
+                <option>Konfigurasi Perangkat Jaringan (MikroTik)</option>
+                <option>Sistem Pengawasan CCTV</option>
+                <option>Administrasi Server dan Hosting</option>
+                <option>Pemulihan Data</option>
+                <option>Lainnya / Konsultasi</option>
+              </select>
+            </div>
+            <div class="f-group">
+              <label for="f-pesan">Uraian Kebutuhan <em>*</em></label>
+              <textarea id="f-pesan" name="pesan" rows="4" placeholder="Jelaskan secara singkat perangkat atau permasalahan yang perlu ditangani..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Kirim Permohonan</button>
+            <p class="f-note" id="form-msg" role="status" aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </section>
@@ -273,25 +408,25 @@
       </div>
       <div class="f-col">
         <h4>Navigasi</h4>
-        <a href="index.html">Beranda</a>
-        <a href="profil.html">Profil</a>
-        <a href="layanan.html">Layanan</a>
-        <a href="kegiatan.html">Kegiatan</a>
-        <a href="kontak.html">Kontak</a>
+        <a href="#beranda">Beranda</a>
+        <a href="#profil">Profil</a>
+        <a href="#layanan">Layanan</a>
+        <a href="#kegiatan">Kegiatan</a>
+        <a href="#kontak">Kontak</a>
       </div>
       <div class="f-col">
         <h4>Layanan</h4>
-        <a href="layanan.html">Servis komputer</a>
-        <a href="layanan.html">Instalasi jaringan</a>
-        <a href="layanan.html">Konfigurasi MikroTik</a>
-        <a href="layanan.html">Instalasi CCTV</a>
-        <a href="layanan.html">Server &amp; hosting</a>
+        <a href="#layanan">Servis komputer</a>
+        <a href="#layanan">Instalasi jaringan</a>
+        <a href="#layanan">Konfigurasi MikroTik</a>
+        <a href="#layanan">Instalasi CCTV</a>
+        <a href="#layanan">Server &amp; hosting</a>
       </div>
       <div class="f-col">
         <h4>Kontak</h4>
         <p>Jl. Kyai Mojo No. 18, Krian, Sidoarjo, Jawa Timur 61262</p>
         <p><a href="https://wa.me/6281234567890" target="_blank" rel="noopener">+62 812-3456-7890 (WhatsApp)</a></p>
-        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="691d0203471a020805001a0208290e04080005470a0604">[email&#160;protected]</a></p>
+        <p>tkj.skaliska@gmail.com</p>
         <p>Senin–Sabtu · 07.00–16.00 WIB</p>
       </div>
     </div>
@@ -307,6 +442,6 @@
     <svg viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1-5.3a8.5 8.5 0 1 1 17-3.2z" fill="currentColor"/></svg>
   </a>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2d9b8e88e98fda2',t:'MTc4NzE0ODQyMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  <script src="main.js"></script>
+</body>
 </html>
