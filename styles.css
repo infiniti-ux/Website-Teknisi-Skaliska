@@ -414,3 +414,22 @@ body { background: var(--surface); overscroll-behavior-y: none; color: var(--tex
 
 /* Progress bar upload logo (lebar diubah lewat JS saat proses upload berjalan) */
 .logo-progress-bar { background: var(--blue); width: 0%; }
+
+/* === HOVER STATE UNTUK DESKTOP/WEB (Vercel dibuka lewat browser laptop) === */
+@media (hover: hover) and (pointer: fine) {
+  .inv-card:hover { box-shadow: 0 6px 20px -4px rgba(0,0,0,0.1); transform: translateY(-1px); }
+  .user-card:hover, .log-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-1px); }
+  .btn-borrow:not(:disabled):hover { filter: brightness(1.06); }
+  .btn-edit:hover { background: #D6E8FF; }
+  .btn-return:not(:disabled):hover { background: #E5EAF7; }
+  .filter-pill:not(.active):hover { border-color: var(--blue); color: var(--blue); }
+  .nav-pill:not(.active):hover { color: var(--blue-mid); }
+  button { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+}
+
+/* Batas lebar biar nyaman dibuka di layar besar (bukan cuma mobile) */
+@media (min-width: 640px) {
+  #app-view { max-width: 480px; margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,0.08); }
+  body { background: var(--blue-dark); }
+}
