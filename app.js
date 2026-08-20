@@ -29,13 +29,16 @@ let riwayatData = [];
 let usersData = [];
 let pendingRequests = [];
 let userPinjamanMap = {};
+let userPendingReturnMap = {}; // barangId -> true kalau teknisi ybs punya request pengembalian yang masih pending
 let unsubscribePinjaman = null;
 let unsubscribeUsers = null;
 let unsubscribeRequests = null;
+let unsubscribeMyReturnRequests = null;
 let confirmResolve = null;
 let currentFilter = 'semua';
 let pendingLogoFile = null;
 let currentLogoUrl = '';
+let processingIds = new Set(); // kunci sementara biar tombol gak bisa di-spam-klik saat request masih diproses
 
 // ---------- FUNGSI PEMBANTU ----------
 function escapeHTML(str) {
@@ -309,11 +312,14 @@ function renderGudangList() {
     if (currentUser.role === 'admin') {
       actionUI = `<button onclick="openBarangModal('${id}')" class="w-full py-3 text-sm font-bold rounded-2xl transition btn-edit">Edit Barang</button>`;
     } else {
-      const returnDisabled = pinjam === 0;
+      const pendingReturn = !!userPendingReturnMap[id];
+      const returnDisabled = pinjam === 0 || pendingReturn;
       const pinjamDisabled = stok <= 0;
+      const returnLabel = pendingReturn ? 'Menunggu' : (pinjam > 0 ? `Kembali (${pinjam})` : 'Kembali');
+      const returnTitle = pendingReturn ? 'title="Menunggu persetujuan admin"' : '';
       actionUI = `
-        <button onclick="kembalikanBarang('${id}')" class="flex-1 py-3 text-sm font-bold rounded-2xl transition btn-return${returnDisabled ? ' cursor-not-allowed' : ''}" ${returnDisabled ? 'disabled' : ''}>${pinjam > 0 ? `Kembali (${pinjam})` : 'Kembali'}</button>
-        <button onclick="pinjamBarang('${id}')" class="flex-1 py-3 text-sm font-bold rounded-2xl transition btn-borrow${pinjamDisabled ? ' !bg-gray-100 !text-gray-400 !shadow-none' : ''}" ${pinjamDisabled ? 'disabled' : ''}>Pinjam</button>
+        <button onclick="kembalikanBarang('${id}', this)" ${returnTitle} class="flex-1 py-3 text-sm font-bold rounded-2xl transition btn-return${returnDisabled ? ' cursor-not-allowed' : ''}" ${returnDisabled ? 'disabled' : ''}>${returnLabel}</button>
+        <button onclick="pinjamBarang('${id}', this)" class="flex-1 py-3 text-sm font-bold rounded-2xl transition btn-borrow${pinjamDisabled ? ' !bg-gray-100 !text-gray-400 !shadow-none' : ''}" ${pinjamDisabled ? 'disabled' : ''}>Pinjam</button>
       `;
     }
 
@@ -366,8 +372,8 @@ function renderRiwayatList() {
                     <p class="text-[10px] font-bold mt-0.5" style="color:var(--text-3)">${new Date(req.waktu).toLocaleString('id-ID')}</p>
                   </div>
                   <div class="flex gap-2 shrink-0">
-                    <button onclick="approveReturn('${req.id}')" class="w-9 h-9 bg-green-500 text-white rounded-xl flex items-center justify-center transition active:scale-90 shadow-sm" title="Setujui"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></button>
-                    <button onclick="rejectReturn('${req.id}')" class="w-9 h-9 bg-red-500 text-white rounded-xl flex items-center justify-center transition active:scale-90 shadow-sm" title="Tolak"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                    <button onclick="approveReturn('${req.id}', this)" class="w-9 h-9 bg-green-500 text-white rounded-xl flex items-center justify-center transition active:scale-90 shadow-sm" title="Setujui"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></button>
+                    <button onclick="rejectReturn('${req.id}', this)" class="w-9 h-9 bg-red-500 text-white rounded-xl flex items-center justify-center transition active:scale-90 shadow-sm" title="Tolak"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
                   </div>
                 </div>
               </div>
@@ -585,6 +591,32 @@ function attachRequestsListener() {
   }, err => showToast('Gagal memuat permintaan pengembalian: ' + err.message, 'error'));
 }
 
+// Khusus teknisi: pantau permintaan pengembalian miliknya sendiri yang masih
+// pending, supaya tombol "Kembali" di kartu barang otomatis ter-kunci
+// (bukan cuma sesaat lewat toast) selama masih menunggu persetujuan admin.
+// Ini mencegah teknisi bisa spam klik "Kembalikan" berkali-kali untuk
+// barang yang sama.
+function attachMyReturnRequestsListener(username) {
+  if (unsubscribeMyReturnRequests) unsubscribeMyReturnRequests();
+  if (!username) {
+    userPendingReturnMap = {};
+    renderGudangList();
+    return;
+  }
+  unsubscribeMyReturnRequests = db.collection('return_requests')
+    .where('user', '==', username)
+    .where('status', '==', 'pending')
+    .onSnapshot(snapshot => {
+      const map = {};
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        map[data.barangId] = true;
+      });
+      userPendingReturnMap = map;
+      renderGudangList();
+    }, err => showToast('Gagal memuat status pengembalian: ' + err.message, 'error'));
+}
+
 // ---------- LOGIN ----------
 function loginSuccess(name, role) {
   currentUser = { name, role };
@@ -605,6 +637,7 @@ function loginSuccess(name, role) {
     attachRequestsListener();
   } else {
     attachPinjamanListener(name);
+    attachMyReturnRequestsListener(name);
   }
 
   document.getElementById('login-view').classList.add('hidden');
@@ -699,9 +732,12 @@ function handleLogout() {
   if (unsubscribePinjaman) unsubscribePinjaman();
   if (unsubscribeUsers) unsubscribeUsers();
   if (unsubscribeRequests) unsubscribeRequests();
+  if (unsubscribeMyReturnRequests) unsubscribeMyReturnRequests();
   userPinjamanMap = {};
+  userPendingReturnMap = {};
   usersData = [];
   pendingRequests = [];
+  processingIds.clear();
   currentUser = { name: '', role: '' };
   document.getElementById('login-view').classList.remove('hidden');
   document.getElementById('app-view').classList.add('hidden');
@@ -890,45 +926,87 @@ async function hapusPengguna(id) {
 // ---------- TRANSAKSI ----------
 // Peminjaman terjadi langsung (tanpa approval admin) begitu teknisi klik
 // "Pinjam" -- stok langsung berkurang. Pengembalian yang butuh approval admin.
-async function pinjamBarang(id) {
+//
+// Semua fungsi transaksi di bawah ini dilindungi 3 lapis biar gak bisa
+// di-spam-klik (misal double klik atau klik cepat berkali-kali):
+//   1. processingIds -- kunci sementara di memori, mencegah fungsi yang sama
+//      jalan dobel sebelum request sebelumnya selesai
+//   2. tombol langsung di-disable begitu diklik (lewat parameter "btnEl")
+//   3. Firestore transaction / pengecekan data terbaru sebelum menulis,
+//      supaya gak terjadi race condition (misal 2 perangkat pinjam barang
+//      yang sama persis di detik yang sama)
+async function pinjamBarang(id, btnEl) {
   if (currentUser.role !== 'user') return;
-  const item = gudangData.find(b => b.id === id);
-  if (!item || item.stok <= 0) return;
+  if (processingIds.has(id)) return;
+  processingIds.add(id);
+  if (btnEl) btnEl.disabled = true;
   if (navigator.vibrate) navigator.vibrate(20);
   try {
-    await db.collection('gudang').doc(id).update({ stok: item.stok - 1 });
-    await db.collection('pinjaman').add({
-      user: currentUser.name,
-      barangId: id,
-      barangNama: item.nama,
-      jumlah: 1,
-      waktu: Date.now()
+    let namaBarang = '';
+    await db.runTransaction(async (tx) => {
+      const barangRef = db.collection('gudang').doc(id);
+      const barangSnap = await tx.get(barangRef);
+      if (!barangSnap.exists) throw new Error('Barang tidak ditemukan.');
+      const barang = barangSnap.data();
+      if ((barang.stok || 0) <= 0) throw new Error('Stok barang sudah habis.');
+      namaBarang = barang.nama;
+
+      tx.update(barangRef, { stok: barang.stok - 1 });
+      tx.set(db.collection('pinjaman').doc(), {
+        user: currentUser.name,
+        barangId: id,
+        barangNama: barang.nama,
+        jumlah: 1,
+        waktu: Date.now()
+      });
+      tx.set(db.collection('riwayat').doc(), {
+        user: currentUser.name,
+        aksi: 'pinjam',
+        barang: barang.nama,
+        waktu: Date.now()
+      });
     });
-    await db.collection('riwayat').add({
-      user: currentUser.name,
-      aksi: 'pinjam',
-      barang: item.nama,
-      waktu: Date.now()
-    });
-    showToast(`Dipinjam: ${escapeHTML(item.nama)}`, 'success');
+    showToast(`Dipinjam: ${escapeHTML(namaBarang)}`, 'success');
   } catch (e) {
-    showToast('Transaksi gagal: ' + e.message, 'error');
+    showToast(e.message || 'Transaksi gagal.', 'error');
+  } finally {
+    processingIds.delete(id);
+    if (btnEl) btnEl.disabled = false;
   }
 }
 
-async function kembalikanBarang(id) {
+async function kembalikanBarang(id, btnEl) {
   if (currentUser.role !== 'user') return;
-  const item = gudangData.find(b => b.id === id);
-  const namaBarang = item ? item.nama : 'Barang';
+  if (processingIds.has(id)) return;
+  processingIds.add(id);
+  if (btnEl) btnEl.disabled = true;
   if (navigator.vibrate) navigator.vibrate(20);
   try {
+    const item = gudangData.find(b => b.id === id);
+    const namaBarang = item ? item.nama : 'Barang';
+
+    // Pastikan user memang benar-benar sedang meminjam barang ini --
+    // kalau tidak ada record pinjaman miliknya untuk barang ini, tolak.
     const pinjamanQuery = db.collection('pinjaman').where('user', '==', currentUser.name).where('barangId', '==', id);
-    const snapshot = await pinjamanQuery.get();
-    if (snapshot.empty) {
-      showToast('Tidak ada pinjaman untuk barang ini.', 'warning');
+    const pinjamanSnap = await pinjamanQuery.get();
+    if (pinjamanSnap.empty) {
+      showToast('Anda tidak sedang meminjam barang ini.', 'warning');
       return;
     }
-    const pinjamanDoc = snapshot.docs[0];
+
+    // Cegah spam: kalau sudah ada permintaan pengembalian yang masih
+    // pending untuk barang ini, jangan buat permintaan baru lagi.
+    const existingRequest = await db.collection('return_requests')
+      .where('user', '==', currentUser.name)
+      .where('barangId', '==', id)
+      .where('status', '==', 'pending')
+      .get();
+    if (!existingRequest.empty) {
+      showToast('Permintaan pengembalian barang ini masih menunggu persetujuan admin.', 'warning');
+      return;
+    }
+
+    const pinjamanDoc = pinjamanSnap.docs[0];
     await db.collection('return_requests').add({
       user: currentUser.name,
       barangId: id,
@@ -941,41 +1019,62 @@ async function kembalikanBarang(id) {
     showToast(`Permintaan pengembalian "${escapeHTML(namaBarang)}" dikirim.`, 'info');
   } catch (e) {
     showToast('Transaksi gagal: ' + e.message, 'error');
+  } finally {
+    processingIds.delete(id);
+    if (btnEl) btnEl.disabled = false;
   }
 }
 
-// Cukup diberi requestId -- detail permintaan diambil dari pendingRequests
-// (state hasil listener) atau langsung dari Firestore saat eksekusi.
-async function approveReturn(requestId) {
+// Cukup diberi requestId -- detail permintaan diambil dari Firestore saat
+// eksekusi. Dilindungi processingIds + transaction supaya admin gak bisa
+// tidak sengaja menyetujui permintaan yang sama dua kali (yang tadinya bisa
+// bikin stok bertambah dobel).
+async function approveReturn(requestId, btnEl) {
   if (currentUser.role !== 'admin') return;
+  if (processingIds.has(requestId)) return;
+  processingIds.add(requestId);
+  if (btnEl) btnEl.disabled = true;
   try {
-    const reqDoc = await db.collection('return_requests').doc(requestId).get();
-    if (!reqDoc.exists) {
-      showToast('Request tidak ditemukan.', 'error');
-      return;
-    }
-    const reqData = reqDoc.data();
-    await db.collection('pinjaman').doc(reqData.pinjamanDocId).delete();
-    const barangDoc = await db.collection('gudang').doc(reqData.barangId).get();
-    if (barangDoc.exists) {
-      const currentStok = barangDoc.data().stok || 0;
-      await db.collection('gudang').doc(reqData.barangId).update({ stok: currentStok + (reqData.jumlah || 1) });
-    }
-    await db.collection('riwayat').add({
-      user: reqData.user,
-      aksi: 'kembali',
-      barang: reqData.barangNama,
-      waktu: Date.now()
+    let namaBarangHasil = '';
+    await db.runTransaction(async (tx) => {
+      const reqRef = db.collection('return_requests').doc(requestId);
+      const reqSnap = await tx.get(reqRef);
+      if (!reqSnap.exists) throw new Error('Request tidak ditemukan (mungkin sudah diproses).');
+      const reqData = reqSnap.data();
+      namaBarangHasil = reqData.barangNama;
+
+      const barangRef = db.collection('gudang').doc(reqData.barangId);
+      const barangSnap = await tx.get(barangRef);
+      if (barangSnap.exists) {
+        const currentStok = barangSnap.data().stok || 0;
+        tx.update(barangRef, { stok: currentStok + (reqData.jumlah || 1) });
+      }
+
+      if (reqData.pinjamanDocId) {
+        tx.delete(db.collection('pinjaman').doc(reqData.pinjamanDocId));
+      }
+      tx.set(db.collection('riwayat').doc(), {
+        user: reqData.user,
+        aksi: 'kembali',
+        barang: reqData.barangNama,
+        waktu: Date.now()
+      });
+      tx.delete(reqRef);
     });
-    await db.collection('return_requests').doc(requestId).delete();
-    showToast(`Pengembalian "${escapeHTML(reqData.barangNama)}" disetujui.`, 'success');
+    showToast(`Pengembalian "${escapeHTML(namaBarangHasil)}" disetujui.`, 'success');
   } catch (e) {
-    showToast('Gagal: ' + e.message, 'error');
+    showToast(e.message || 'Gagal memproses.', 'error');
+  } finally {
+    processingIds.delete(requestId);
+    if (btnEl) btnEl.disabled = false;
   }
 }
 
-async function rejectReturn(requestId) {
+async function rejectReturn(requestId, btnEl) {
   if (currentUser.role !== 'admin') return;
+  if (processingIds.has(requestId)) return;
+  processingIds.add(requestId);
+  if (btnEl) btnEl.disabled = true;
   try {
     const reqDoc = await db.collection('return_requests').doc(requestId).get();
     const reqData = reqDoc.exists ? reqDoc.data() : null;
@@ -991,6 +1090,9 @@ async function rejectReturn(requestId) {
     showToast('Pengembalian ditolak.', 'warning');
   } catch (e) {
     showToast('Gagal: ' + e.message, 'error');
+  } finally {
+    processingIds.delete(requestId);
+    if (btnEl) btnEl.disabled = false;
   }
 }
 
